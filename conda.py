@@ -1,6 +1,6 @@
 import pygame as pg
 import sys
-
+import numpy as np
 # Константы цветов
 
 WHITE = (255, 255, 255)
@@ -39,14 +39,39 @@ pg.draw.circle(sc, RED, (A[0]-r/2, A[1]-r/5), r/5)
 pg.draw.circle(sc, BLACK, (A[0]-r/2, A[1]-r/5), r/12)
 
 # left brov
-pg.draw.polygon(sc, PINK,
-                    [[20, 60], [70, 30],
-                     [50, 10], [0, 40]])
+a = 238
+b = 140
+length = 180
+width = 25
+cos_45 = np.cos(np.pi/4)
+x1 = [a, b]
+x2 = [a + cos_45*length, b + cos_45*length]
+x3 = [a + cos_45*(length + width), b + cos_45*(length - width)]
+x4 = [a + cos_45*width, b - cos_45*width]
+
+
+pg.draw.polygon(sc, BLACK, (x1, x2, x3, x4))
 
 # right eye
 pg.draw.circle(sc, BLACK, (A[0]+r/2, A[1]-r/5), r/6 + 2)
 pg.draw.circle(sc, RED, (A[0]+r/2, A[1]-r/5), r/6)
 pg.draw.circle(sc, BLACK, (A[0]+r/2, A[1]-r/5), r/14)
+
+
+# right brov
+
+a = 425
+b = 250
+length = 180
+width = 28
+cos_45 = np.cos(np.pi/4)
+x1 = [a, b]
+x2 = [a + cos_45*width, b + cos_45*width]
+x3 = [a + cos_45*(length + width), b + cos_45*(width - length)]
+x4 = [a + cos_45*length, b - cos_45*length]
+
+pg.draw.polygon(sc, BLACK, (x1, x2, x3, x4))
+
 
 
 pg.display.update()
