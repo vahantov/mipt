@@ -1,30 +1,45 @@
 import pygame
-from pygame.draw import *
+import sys
 
-pygame.init()
+FPS = 60
+WIN_WIDTH = 400
+WIN_HEIGHT = 100
+WHITE = (255, 255, 255)
+ORANGE = (255, 150, 100)
 
-FPS = 30
-screen = pygame.display.set_mode((400, 400))
-
-x1 = 100; y1 = 100
-x2 = 300; y2 = 200
-N = 10
-color = (255, 255, 255)
-rect(screen, color, (x1, y1, x2 - x1, y2 - y1), 2)
-h = (x2 - x1) // (N + 1)
-x = x1 + h
-for i in range(N):
-    line(screen, color, (x, y1), (x, y2))
-    x += h
-
-pygame.display.update()
 clock = pygame.time.Clock()
-finished = False
+sc = pygame.display.set_mode(
+    (WIN_WIDTH, WIN_HEIGHT))
 
-while not finished:
+# радиус будущего круга
+r = 30
+# координаты круга
+# скрываем за левой границей
+x = 0 - r
+# выравнивание по центру по вертикали
+y = WIN_HEIGHT // 2
+
+while 1:
+    for i in pygame.event.get():
+        if i.type == pygame.QUIT:
+            sys.exit()
+
+    # заливаем фон
+    sc.fill(WHITE)
+    # рисуем круг
+    pygame.draw.circle(sc, ORANGE,
+                       (x, y), r)
+    # обновляем окно
+    pygame.display.update()
+
+    # Если круг полностью скрылся
+    # за правой границей,
+    if x >= WIN_WIDTH + r:
+        # перемещаем его за левую
+        x = 0 - r
+    else:  # Если еще нет,
+        # на следующей итерации цикла
+        # круг отобразится немного правее
+        x += 2
+
     clock.tick(FPS)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-
-pygame.quit()
